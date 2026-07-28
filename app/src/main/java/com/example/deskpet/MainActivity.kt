@@ -100,8 +100,7 @@ class MainActivity : AppCompatActivity() {
         val overlayGranted = Settings.canDrawOverlays(this)
         val usageGranted = hasUsageStatsPermission()
         val notifGranted = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
-                == PackageManager.PERMISSION_GRANTED
+            ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
         } else true
 
         if (overlayGranted && usageGranted && notifGranted) {
