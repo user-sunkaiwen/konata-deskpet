@@ -19,6 +19,7 @@ import android.webkit.WebSettings
 import androidx.core.app.NotificationCompat
 import java.io.File
 import java.util.*
+import android.os.FileObserver
 
 class OverlayService : Service() {
 
@@ -204,7 +205,7 @@ class OverlayService : Service() {
                         current.contains("bilibili") -> "onAppChanged('看B站也不带我！')"
                         current.contains("game") || current.contains("王者") || current.contains("genshin") -> "onAppChanged('打游戏怎么不叫我！')"
                         current.contains("chrome") || current.contains("browser") -> "onAppChanged('在搜什么呢～')"
-                        else -> "onAppChanged('你在用$appName呢')"
+                        else -> "onAppChanged('你在用${appName}呢')"
                     }
                     overlayView?.post {
                         overlayView?.evaluateJavascript("window.petEngine && window.petEngine.$js", null)
@@ -251,7 +252,7 @@ class OverlayService : Service() {
         for (path in paths) {
             val dir = File(path)
             if (!dir.exists()) continue
-            val observer = object : FileObserver(dir, CREATE or MOVED_TO) {
+            val observer = object : FileObserver(dir.absolutePath, CREATE or MOVED_TO) {
                 override fun onEvent(event: Int, path: String?) {
                     if (path != null && (path.lowercase().endsWith(".png") || path.lowercase().endsWith(".jpg"))) {
                         overlayView?.post {
@@ -362,7 +363,7 @@ class OverlayService : Service() {
         }
         overlayView = null
         usageTimer?.cancel()
-        screenshotObservers.forEach { it.stopWatching() }
+        for (obs in screenshotObservers) obs.stopWatching()
         screenshotObservers.clear()
         whisperHandler.removeCallbacksAndMessages(null)
         idleHandler.removeCallbacksAndMessages(null)

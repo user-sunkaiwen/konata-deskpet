@@ -59,8 +59,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         // 2. Usage stats permission
-        val usm = getSystemService(android.app.admin.DevicePolicyManager::class.java)
-        // Actually check UsageStats
         if (!hasUsageStatsPermission()) {
             AlertDialog.Builder(this)
                 .setTitle("需要使用情况访问权限")
