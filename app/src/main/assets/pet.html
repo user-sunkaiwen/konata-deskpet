@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>泉此方桌宠</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body {
+    width: 100%; height: 100%;
+    overflow: hidden;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#pet-container {
+    width: 180px;
+    height: 240px;
+    position: relative;
+    cursor: pointer;
+}
+svg {
+    width: 100%;
+    height: 100%;
+}
+/* Bubble styling */
+#bubble {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    color: #333;
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-family: 'Segoe UI', sans-serif;
+    white-space: nowrap;
+    max-width: 160px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+    z-index: 10;
+}
+#bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid white;
+}
+#bubble.show {
+    opacity: 1;
+}
+/* Blink animation */
+@keyframes blink {
+    0%, 95%, 100% { visibility: visible; }
+    97% { visibility: hidden; }
+}
+.eye-open { animation: blink 3s infinite; }
+/* Sleep zzz */
+@keyframes float-up {
+    0% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-30px); }
+}
+.zzz {
+    animation: float-up 2s infinite;
+}
+/* Heart beat */
+@keyframes heartBeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+}
+.heart { animation: heartBeat 1s infinite; transform-origin: center; }
+/* Shake */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+.shake { animation: shake 0.3s 3; }
+/* Bounce */
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+.bounce { animation: bounce 0.5s 2; }
+/* Fade out animation */
+@keyframes fadeAway {
+    0% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(0.5); }
+}
+</style>
+</head>
+<body>
+<div id="pet-container">
+    <div id="bubble"></div>
+    <svg viewBox="0 0 180 240" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <linearGradient id="hairGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#5B4FCF"/>
+                <stop offset="100%" style="stop-color:#3D3490"/>
+            </linearGradient>
+            <linearGradient id="dressGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" style="stop-color:#4A7CF5"/>
+                <stop offset="100%" style="stop-color:#2E5FD4"/>
+            </linearGradient>
+        </defs>
+
+        <!-- ========== BODY / DRESS (水手服) ========== -->
+        <!-- 裙子/身体 -->
+        <rect x="55" y="145" width="70" height="80" rx="10" fill="white" stroke="#ddd" stroke-width="1"/>
+        <!-- 水手领 -->
+        <path d="M55 145 L90 120 L125 145 Z" fill="url(#dressGrad)" stroke="#3D6BD4" stroke-width="1"/>
+        <path d="M70 145 L90 130 L110 145 Z" fill="white"/>
+        <!-- 红领巾/蝴蝶结 -->
+        <ellipse cx="90" cy="132" rx="8" ry="5" fill="#FF4444"/>
+        <ellipse cx="85" cy="128" rx="4" ry="3" fill="#FF6666"/>
+        <ellipse cx="95" cy="128" rx="4" ry="3" fill="#FF6666"/>
+        <!-- 袖子 -->
+        <rect x="40" y="150" width="20" height="30" rx="8" fill="white" stroke="#ddd" stroke-width="1"/>
+        <rect x="120" y="150" width="20" height="30" rx="8" fill="white" stroke="#ddd" stroke-width="1"/>
+
+        <!-- ========== HEAD ========== -->
+        <!-- 脖子 -->
+        <rect x="80" y="135" width="20" height="15" rx="5" fill="#FFE0C0"/>
+        <!-- 脸 -->
+        <ellipse cx="90" cy="100" rx="42" ry="40" fill="#FFE8D0"/>
+        <!-- 耳朵 -->
+        <ellipse cx="50" cy="95" rx="6" ry="10" fill="#FFE0C0"/>
+        <ellipse cx="130" cy="95" rx="6" ry="10" fill="#FFE0C0"/>
+
+        <!-- ========== HAIR (蓝色短发) ========== -->
+        <!-- 后发 -->
+        <ellipse cx="90" cy="70" rx="48" ry="35" fill="url(#hairGrad)"/>
+        <!-- 刘海 -->
+        <path d="M48 85 Q55 55 75 65 Q80 50 90 55 Q100 50 105 65 Q125 55 132 85" fill="url(#hairGrad)"/>
+        <!-- 刘海碎发 -->
+        <path d="M55 80 Q65 65 75 75" fill="url(#hairGrad)" stroke="url(#hairGrad)" stroke-width="2"/>
+        <path d="M105 75 Q115 65 125 80" fill="url(#hairGrad)" stroke="url(#hairGrad)" stroke-width="2"/>
+        <!-- 两侧头发 -->
+        <path d="M48 85 Q42 110 45 130 Q48 140 52 135 Q48 120 50 100 Z" fill="url(#hairGrad)"/>
+        <path d="M132 85 Q138 110 135 130 Q132 140 128 135 Q132 120 130 100 Z" fill="url(#hairGrad)"/>
+        <!-- 呆毛（标志性！） -->
+        <path d="M90 48 Q85 30 95 20 Q100 15 98 25 Q92 35 95 50" fill="url(#hairGrad)" stroke="#5B4FCF" stroke-width="2">
+            <animateTransform attributeName="transform" type="rotate" values="-5 90 48;5 90 48;-5 90 48" dur="2s" repeatCount="indefinite"/>
+        </path>
+
+        <!-- ========== EYES (红色眼睛) ========== -->
+        <!-- 正常睁眼 -->
+        <g id="eyes-open">
+            <!-- 眼白 -->
+            <ellipse cx="72" cy="95" rx="11" ry="12" fill="white" stroke="#555" stroke-width="1.5"/>
+            <ellipse cx="108" cy="95" rx="11" ry="12" fill="white" stroke="#555" stroke-width="1.5"/>
+            <!-- 瞳孔（红色） -->
+            <ellipse cx="73" cy="95" rx="7" ry="8" fill="#CC2222"/>
+            <ellipse cx="109" cy="95" rx="7" ry="8" fill="#CC2222"/>
+            <!-- 高光 -->
+            <ellipse cx="75" cy="92" rx="3" ry="3" fill="white"/>
+            <ellipse cx="111" cy="92" rx="3" ry="3" fill="white"/>
+            <!-- 上睫毛 -->
+            <path d="M60 90 Q72 82 84 90" fill="none" stroke="#555" stroke-width="1.5"/>
+            <path d="M96 90 Q108 82 120 90" fill="none" stroke="#555" stroke-width="1.5"/>
+        </g>
+
+        <!-- 开心=弯弯眼 -->
+        <g id="eyes-happy" style="display:none">
+            <path d="M62 92 Q72 82 82 92" fill="none" stroke="#555" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M98 92 Q108 82 118 92" fill="none" stroke="#555" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- 脸颊红晕 -->
+            <ellipse cx="60" cy="105" rx="10" ry="5" fill="#FF9999" opacity="0.5"/>
+            <ellipse cx="120" cy="105" rx="10" ry="5" fill="#FF9999" opacity="0.5"/>
+        </g>
+
+        <!-- 委屈/哭 -->
+        <g id="eyes-sad" style="display:none">
+            <ellipse cx="72" cy="95" rx="11" ry="12" fill="white" stroke="#555" stroke-width="1.5"/>
+            <ellipse cx="108" cy="95" rx="11" ry="12" fill="white" stroke="#555" stroke-width="1.5"/>
+            <ellipse cx="73" cy="97" rx="7" ry="8" fill="#CC2222"/>
+            <ellipse cx="109" cy="97" rx="7" ry="8" fill="#CC2222"/>
+            <!-- 泪滴 -->
+            <ellipse cx="65" cy="112" rx="3" ry="5" fill="#99CCFF" opacity="0.7">
+                <animate attributeName="opacity" values="0.7;0.3;0.7" dur="2s" repeatCount="indefinite"/>
+            </ellipse>
+            <ellipse cx="115" cy="112" rx="3" ry="5" fill="#99CCFF" opacity="0.7">
+                <animate attributeName="opacity" values="0.3;0.7;0.3" dur="2s" repeatCount="indefinite"/>
+            </ellipse>
+        </g>
+
+        <!-- 生气=叉叉眼 -->
+        <g id="eyes-angry" style="display:none">
+            <line x1="64" y1="87" x2="80" y2="103" stroke="#555" stroke-width="3" stroke-linecap="round"/>
+            <line x1="80" y1="87" x2="64" y2="103" stroke="#555" stroke-width="3" stroke-linecap="round"/>
+            <line x1="100" y1="87" x2="116" y2="103" stroke="#555" stroke-width="3" stroke-linecap="round"/>
+            <line x1="116" y1="87" x2="100" y2="103" stroke="#555" stroke-width="3" stroke-linecap="round"/>
+            <!-- 眉毛竖起来 -->
+            <line x1="60" y1="82" x2="80" y2="78" stroke="#555" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="120" y1="82" x2="100" y2="78" stroke="#555" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- 愤怒标记 -->
+            <text x="90" y="75" font-size="14" text-anchor="middle" fill="#FF4444">💢</text>
+        </g>
+
+        <!-- 闭眼睡 -->
+        <g id="eyes-sleep" style="display:none">
+            <path d="M62 95 Q72 89 82 95" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round"/>
+            <path d="M98 95 Q108 89 118 95" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round"/>
+        </g>
+
+        <!-- 惊喜=大眼 -->
+        <g id="eyes-surprised" style="display:none">
+            <ellipse cx="72" cy="95" rx="13" ry="14" fill="white" stroke="#555" stroke-width="1.5"/>
+            <ellipse cx="108" cy="95" rx="13" ry="14" fill="white" stroke="#555" stroke-width="1.5"/>
+            <ellipse cx="73" cy="95" rx="9" ry="10" fill="#CC2222"/>
+            <ellipse cx="109" cy="95" rx="9" ry="10" fill="#CC2222"/>
+            <ellipse cx="77" cy="91" rx="4" ry="4" fill="white"/>
+            <ellipse cx="113" cy="91" rx="4" ry="4" fill="white"/>
+        </g>
+
+        <!-- 星星眼 -->
+        <g id="eyes-star" style="display:none">
+            <text x="72" y="102" font-size="18" text-anchor="middle" fill="#FFD700">⭐</text>
+            <text x="108" y="102" font-size="18" text-anchor="middle" fill="#FFD700">⭐</text>
+        </g>
+
+        <!-- ========== MOUTH ========== -->
+        <!-- 微笑 -->
+        <g id="mouth-smile">
+            <path d="M80 112 Q90 120 100 112" fill="none" stroke="#CC6644" stroke-width="2" stroke-linecap="round"/>
+        </g>
+        <!-- 张嘴 -->
+        <g id="mouth-open" style="display:none">
+            <ellipse cx="90" cy="114" rx="7" ry="6" fill="#663322"/>
+            <ellipse cx="90" cy="112" rx="5" ry="3" fill="#FF6666"/>
+        </g>
+        <!-- 撇嘴 -->
+        <g id="mouth-sad" style="display:none">
+            <path d="M80 115 Q90 110 100 115" fill="none" stroke="#CC6644" stroke-width="2" stroke-linecap="round"/>
+        </g>
+        <!-- 张大嘴惊讶 -->
+        <g id="mouth-surprised" style="display:none">
+            <ellipse cx="90" cy="115" rx="8" ry="9" fill="#222"/>
+            <ellipse cx="90" cy="112" rx="6" ry="4" fill="#FF6666"/>
+        </g>
+        <!-- 三角嘴生气 -->
+        <g id="mouth-angry" style="display:none">
+            <path d="M82 112 L90 108 L98 112 Z" fill="#CC6644"/>
+        </g>
+
+        <!-- ========== 腮红 ========== -->
+        <g id="blush" opacity="0">
+            <ellipse cx="58" cy="105" rx="10" ry="5" fill="#FF9999" opacity="0.4"/>
+            <ellipse cx="122" cy="105" rx="10" ry="5" fill="#FF9999" opacity="0.4"/>
+        </g>
+
+        <!-- ========== ARMS ========== -->
+        <ellipse cx="45" cy="170" rx="10" ry="18" fill="#FFE0C0" transform="rotate(-15 45 170)"/>
+        <ellipse cx="135" cy="170" rx="10" ry="18" fill="#FFE0C0" transform="rotate(15 135 170)"/>
+
+        <!-- ========== LEGS ========== -->
+        <rect x="62" y="215" width="20" height="25" rx="8" fill="#4A7CF5"/>
+        <rect x="98" y="215" width="20" height="25" rx="8" fill="#4A7CF5"/>
+        <!-- 鞋子 -->
+        <ellipse cx="72" cy="238" rx="14" ry="6" fill="#333"/>
+        <ellipse cx="108" cy="238" rx="14" ry="6" fill="#333"/>
+
+        <!-- ========== HEART overlay (开心时显示) ========== -->
+        <g id="heart-overlay" style="display:none">
+            <text x="50" y="50" font-size="20" class="heart" fill="#FF4477">❤</text>
+            <text x="120" y="40" font-size="16" class="heart" fill="#FF6699">❤</text>
+            <text x="35" y="80" font-size="14" class="heart" fill="#FF88AA">❤</text>
+        </g>
+
+        <!-- ========== SLEEP ZZZ ========== -->
+        <g id="sleep-zzz" style="display:none">
+            <text x="140" y="55" font-size="14" class="zzz" fill="#999">z</text>
+            <text x="150" y="40" font-size="16" class="zzz" fill="#999">z</text>
+            <text x="155" y="25" font-size="18" class="zzz" fill="#999">Z</text>
+        </g>
+    </svg>
+</div>
+
+<script>
+const petEngine = {
+    currentMood: 'idle',
+    currentEyes: 'eyes-open',
+    currentMouth: 'mouth-smile',
+    bubbleTimer: null,
+
+    // Show bubble text
+    showBubble(text, duration) {
+        const bubble = document.getElementById('bubble');
+        bubble.textContent = text;
+        bubble.classList.add('show');
+        if (this.bubbleTimer) clearTimeout(this.bubbleTimer);
+        this.bubbleTimer = setTimeout(() => {
+            bubble.classList.remove('show');
+        }, duration || 3000);
+    },
+
+    // Hide bubble
+    hideBubble() {
+        const bubble = document.getElementById('bubble');
+        bubble.classList.remove('show');
+    },
+
+    // Set mood
+    setMood(mood) {
+        this.currentMood = mood;
+        const allEyes = ['eyes-open', 'eyes-happy', 'eyes-sad', 'eyes-angry', 'eyes-sleep', 'eyes-surprised', 'eyes-star'];
+        const allMouth = ['mouth-smile', 'mouth-open', 'mouth-sad', 'mouth-surprised', 'mouth-angry'];
+        const extras = ['heart-overlay', 'sleep-zzz', 'blush'];
+
+        allEyes.forEach(id => {
+            document.getElementById(id).style.display = 'none';
+        });
+        allMouth.forEach(id => {
+            document.getElementById(id).style.display = 'none';
+        });
+        extras.forEach(id => {
+            document.getElementById(id).style.display = 'none';
+        });
+
+        switch (mood) {
+            case 'happy':
+                document.getElementById('eyes-happy').style.display = 'inline';
+                document.getElementById('mouth-open').style.display = 'inline';
+                document.getElementById('blush').style.display = 'inline';
+                document.getElementById('blush').style.opacity = '0.5';
+                document.getElementById('heart-overlay').style.display = 'inline';
+                break;
+            case 'sad':
+                document.getElementById('eyes-sad').style.display = 'inline';
+                document.getElementById('mouth-sad').style.display = 'inline';
+                break;
+            case 'angry':
+                document.getElementById('eyes-angry').style.display = 'inline';
+                document.getElementById('mouth-angry').style.display = 'inline';
+                break;
+            case 'sleep':
+                document.getElementById('eyes-sleep').style.display = 'inline';
+                document.getElementById('mouth-smile').style.display = 'inline';
+                document.getElementById('sleep-zzz').style.display = 'inline';
+                break;
+            case 'surprised':
+                document.getElementById('eyes-surprised').style.display = 'inline';
+                document.getElementById('mouth-surprised').style.display = 'inline';
+                break;
+            case 'star':
+                document.getElementById('eyes-star').style.display = 'inline';
+                document.getElementById('mouth-open').style.display = 'inline';
+                break;
+            default: // idle
+                document.getElementById('eyes-open').style.display = 'inline';
+                document.getElementById('mouth-smile').style.display = 'inline';
+                break;
+        }
+    },
+
+    // ============ GESTURE CALLBACKS ============
+    onTap() {
+        const reacts = [
+            () => { this.setMood('happy'); this.showBubble('嘿嘿～戳我干嘛！', 2000); },
+            () => { this.setMood('surprised'); this.showBubble('啊！吓我一跳！', 2000); },
+            () => { this.setMood('happy'); this.showBubble('哼～再戳要收费了哦！', 2000); },
+            () => { this.setMood('star'); this.showBubble('你最好是有事找我！', 2000); },
+        ];
+        reacts[Math.floor(Math.random() * reacts.length)]();
+        setTimeout(() => {
+            if (this.currentMood !== 'sleep') this.setMood('idle');
+        }, 2500);
+    },
+
+    onDoubleTap() {
+        this.setMood('happy');
+        this.showBubble('欸嘿嘿～这么喜欢戳我吗？', 2500);
+        document.getElementById('pet-container').classList.add('bounce');
+        setTimeout(() => {
+            document.getElementById('pet-container').classList.remove('bounce');
+            if (this.currentMood !== 'sleep') this.setMood('idle');
+        }, 2500);
+    },
+
+    onTripleTap() {
+        this.setMood('angry');
+        this.showBubble('喂喂喂！没完了是吧！(╯°□°）╯︵ ┻━┻', 3000);
+        document.getElementById('pet-container').classList.add('shake');
+        setTimeout(() => {
+            document.getElementById('pet-container').classList.remove('shake');
+            this.setMood('idle');
+        }, 3000);
+    },
+
+    onLongPress() {
+        this.setMood('sad');
+        this.showBubble('好痛…你舍得吗……', 2500);
+        setTimeout(() => {
+            this.setMood('idle');
+        }, 2500);
+    },
+
+    onFling() {
+        this.setMood('surprised');
+        this.showBubble('哇啊啊——飞了！！', 2000);
+        setTimeout(() => {
+            this.setMood('idle');
+        }, 2500);
+    },
+
+    onDragEnd() {
+        this.setMood('happy');
+        this.showBubble('嗯～这里视野不错！', 1500);
+        setTimeout(() => {
+            this.setMood('idle');
+        }, 2000);
+    },
+
+    onScreenshot() {
+        this.setMood('star');
+        this.showBubble('茄子～！记得发给我看看！✨', 3000);
+        setTimeout(() => {
+            this.setMood('idle');
+        }, 3500);
+    },
+
+    onAppChanged(text) {
+        this.setMood('happy');
+        this.showBubble(text, 3000);
+        setTimeout(() => {
+            if (this.currentMood !== 'sleep') this.setMood('idle');
+        }, 3500);
+    },
+
+    onIdle(text) {
+        this.setMood('happy');
+        this.showBubble(text, 4000);
+    },
+
+    onSleep() {
+        this.setMood('sleep');
+        this.showBubble('zzz…', 0);
+    },
+
+    wakeUp() {
+        if (this.currentMood === 'sleep') {
+            this.setMood('happy');
+            this.showBubble('嗯…？叫我干嘛～', 2000);
+            setTimeout(() => this.setMood('idle'), 2500);
+        }
+    }
+};
+
+// Expose to native
+window.petEngine = petEngine;
+
+// Initial idle
+petEngine.setMood('idle');
+
+// Periodic idle message
+setInterval(() => {
+    if (petEngine.currentMood === 'idle' && !document.getElementById('bubble').classList.contains('show')) {
+        const idleMsgs = [
+            '……你在看什么？',
+            '无聊～',
+            '今天天气不错呢～',
+            '嘿～要不要一起打游戏？',
+            '此方能量不足，需要投喂～',
+            '盯着我看也没用哦～',
+        ];
+        if (Math.random() < 0.35) {
+            petEngine.showBubble(idleMsgs[Math.floor(Math.random() * idleMsgs.length)], 3000);
+        }
+    }
+}, 20000);
+
+// Wake up from sleep on interaction
+document.addEventListener('touchstart', () => {
+    if (petEngine.currentMood === 'sleep') {
+        petEngine.wakeUp();
+    }
+});
+</script>
+</body>
+</html>

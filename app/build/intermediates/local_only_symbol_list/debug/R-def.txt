@@ -1,0 +1,11 @@
+R_DEF: Internal format may change without notice
+local
+drawable ic_launcher_background
+drawable ic_launcher_foreground
+id btn_start
+id desc_text
+id status_text
+id title_text
+layout activity_main
+mipmap ic_launcher
+style Theme.DeskPet
